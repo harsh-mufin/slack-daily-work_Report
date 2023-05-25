@@ -10,15 +10,18 @@ jobs:
     runs-on: ubuntu-20.04
     name: Work Report
     steps:
-    - name: Post to a Slack channel
-      id: slack
-      uses: slackapi/slack-github-action@v1.24.0
-      with:
-        # Slack channel id, channel name, or user id to post message.
-        # See also: https://api.slack.com/methods/chat.postMessage#channels
-        # You can pass in multiple channels to post to by providing a comma-delimited list of channel IDs.
-        channel-id: ${{ secrets.CHANNEL_ID }}
-        # For posting a simple plain text message
-        slack-message: "Daily Work Report"
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Post to a Slack channel
+        id: slack
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          # Slack channel id, channel name, or user id to post message.
+          # See also: https://api.slack.com/methods/chat.postMessage#channels
+          # You can pass in multiple channels to post to by providing a comma-delimited list of channel IDs.
+          channel-id: ${{ secrets.CHANNEL_ID }}
+          # For posting a simple plain text message
+          slack-message: "Daily Work Report: ${{ steps.date.outputs.date }}"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
