@@ -22,6 +22,6 @@ jobs:
           # You can pass in multiple channels to post to by providing a comma-delimited list of channel IDs.
           channel-id: ${{ secrets.CHANNEL_ID }}
           # For posting a simple plain text message
-          slack-message: "Daily Work Report: ${{ steps.date.outputs.date }}"
+          slack-message: " *Daily Work Report: ${{ steps.date.outputs.date }}*\n@team-ai \nUse Format: (${{ secrets.NOTION_LINK }})"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
